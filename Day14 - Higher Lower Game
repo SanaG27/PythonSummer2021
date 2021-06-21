@@ -1,0 +1,61 @@
+import art
+import game_data
+import random
+from replit import clear
+
+print(art.logo)
+game_ends = False
+data_copy = game_data.data
+score = 0
+
+def gen_user_A():
+  global user_name1, user_followers1, user_desc1, user_country1
+  dict = random.choice(data_copy)
+  data_copy.remove(dict)
+  user_name1 = dict['name']
+  user_followers1 = dict['follower_count']
+  user_desc1 = dict['description']
+  user_country1 = dict['country']
+
+def gen_user_B():
+  global user_name2, user_followers2, user_desc2, user_country2
+  dict = random.choice(data_copy)
+  data_copy.remove(dict)
+  user_name2 = dict['name']
+  user_followers2 = dict['follower_count']
+  user_desc2 = dict['description']
+  user_country2 = dict['country']
+
+def correct():
+  clear()
+  print(art.logo)
+
+gen_user_A()
+gen_user_B()
+
+while game_ends == False:
+  print(f"Compare A: {user_name1}, {user_desc1}, from {user_country1}")
+  print(art.vs)
+  print(f"Compare B: {user_name2}, {user_desc2}, from {user_country2}")
+  choice = input("Who has more followers? Type 'A' or 'B':")
+  if choice == 'A':
+    if user_followers1 > user_followers2:
+      score += 1
+      print(f"You're right! Current score: {score}.")
+      correct()
+      gen_user_B()
+    else:
+      correct()
+      print(f"Sorry, that's wrong. Final score: {score}")
+      game_ends = True
+  elif choice == 'B':
+    if user_followers2 > user_followers1:
+      score += 1
+      print(f"You're right! Current score: {score}.")
+      correct()
+      user_name1, user_followers1, user_desc1, user_country1 = user_name2, user_followers2, user_desc2, user_country2
+      gen_user_B()
+    else:
+      correct()
+      print(f"Sorry, that's wrong. Final score: {score}")
+      game_ends = True
